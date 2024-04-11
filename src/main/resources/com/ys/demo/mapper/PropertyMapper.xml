@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ys.demo.mapper.PropertyMapper">
+    <select id="selectPartProperty" resultType="com.ys.demo.pojo.Property">
+        select * from property
+        <where>
+            <if test="org_name!=null and org_name!=''">
+                AND org_name LIKE CONCAT('%', #{org_name}, '%')
+            </if>
+            <if test="ip!=null and ip!=''">
+                AND ip LIKE CONCAT('%', #{ip}, '%')
+            </if>
+            <if test="created != null">
+                AND created &gt;= #{created}
+            </if>
+            <if test="updated != null">
+                AND updated &lt;= #{updated}
+            </if>
+            <if test="cloud_server!=null and cloud_server!=''">
+                AND cloud_server LIKE CONCAT('%', #{cloud_server}, '%')
+            </if>
+            <if test="server!=null and server!=''">
+                AND server LIKE CONCAT('%', #{server}, '%')
+            </if>
+            <if test="org_region!=null and org_region!=''">
+                AND org_region LIKE CONCAT('%', #{org_region}, '%')
+            </if>
+            <if test="org_industry!=null and org_industry!=''">
+                AND org_industry LIKE CONCAT('%', #{org_industry}, '%')
+            </if>
+            <if test="org_type!=null and org_type!=''">
+                AND org_type LIKE CONCAT('%', #{org_type}, '%')
+            </if>
+            <if test="record_num!=null and record_num!=''">
+                AND record_num LIKE CONCAT('%', #{record_num}, '%')
+            </if>
+        </where>
+    </select>
+    <select id="selectPropertyById" resultType="com.ys.demo.pojo.Property">
+        SELECT * FROM property
+        <where>
+            id IN
+            <foreach collection="idList" item="id" open="(" separator="," close=")">
+                #{id}
+            </foreach>
+        </where>
+    </select>
+</mapper>
